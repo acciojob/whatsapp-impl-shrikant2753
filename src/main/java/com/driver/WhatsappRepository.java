@@ -25,11 +25,11 @@ public class WhatsappRepository {
         this.adminMap = new HashMap<Group, User>();
         this.user = new HashMap<String, User>();
         this.userMobile = new HashSet<>();
-        this.customGroupCount = 1;
-        this.messageId = 1;
+        this.customGroupCount = 0;
+        this.messageId = 0;
     }
     public String createUser(String name, String mobile) throws Exception {
-        if(userMobile.contains(mobile)){
+        if(!userMobile.contains(mobile)){
             throw new Exception("User already exists");
         }
         else {
@@ -51,15 +51,16 @@ public class WhatsappRepository {
             return null;
         }
 
-        String groupName = "Group "+customGroupCount++;
+        String groupName = "Group "+ ++customGroupCount;
         Group group = new Group(groupName, users.size());
         groupUserMap.put(group, users);
         return group;
     }
 
     public int createMessage(String content){
+        messageId++;
         Message msg = new Message(messageId, content);
-        return messageId++;
+        return messageId;
     }
 
     public int sendMessage(Message message, User sender, Group group) throws Exception{
