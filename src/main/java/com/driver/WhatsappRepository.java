@@ -123,19 +123,24 @@ public class WhatsappRepository {
         if(!groupUserMap.containsKey(group)){
             throw new Exception("Group does not exist");
         }
-        if(adminMap.get(group)!=approver){
+        if(adminMap.get(group).equals(approver)){
             throw new Exception("Approver does not have rights");
         }
-        boolean flag = false;
-        for(User u : groupUserMap.get(group)){
-            if(user.getMobile().equals(u.getMobile())){
-                flag = true;
-                break;
-            }
-        }
-        if(!flag){
+        if(!groupUserMap.get(group).contains(user))
+        {
             throw new Exception("User is not a participant");
         }
+//        adminMap.put(group,user);
+//        boolean flag = false;
+//        for(User u : groupUserMap.get(group)){
+//            if(user.getMobile().equals(u.getMobile())){
+//                flag = true;
+//                break;
+//            }
+//        }
+//        if(!flag){
+//            throw new Exception("User is not a participant");
+//        }
         adminMap.put(group, user);
         return "SUCCESS";
     }
