@@ -70,37 +70,37 @@ public class WhatsappRepository {
     }
 
     public int sendMessage(Message message, User sender, Group group) throws Exception{
-        if(!groupUserMap.containsKey(group)){
-            throw new Exception("Group does not exist");
-        }
-        if(!groupUserMap.get(group).contains(sender)){
-            throw new Exception("You are not allowed to send message");
-        }
-        senderMap.put(message, sender);
-        List<Message>msg=groupMessageMap.get(group);
-        msg.add(message);
-        groupMessageMap.put(group,msg);
-        return msg.size();
-
-
 //        if(!groupUserMap.containsKey(group)){
 //            throw new Exception("Group does not exist");
 //        }
-//        boolean flag = false;
-//        for(User user : groupUserMap.get(group)){
-//            if(sender.getMobile().equals(user.getMobile())){
-//                flag = true;
-//                break;
-//            }
-//        }
-//        if(!flag){
+//        if(!groupUserMap.get(group).contains(sender)){
 //            throw new Exception("You are not allowed to send message");
 //        }
 //        senderMap.put(message, sender);
-//        List<Message> list = groupMessageMap.get(group);
-//        list.add(message);
-//        groupMessageMap.put(group, list);
-//        return list.size();
+//        List<Message>msg=groupMessageMap.get(group);
+//        msg.add(message);
+//        groupMessageMap.put(group,msg);
+//        return msg.size();
+
+
+        if(!groupUserMap.containsKey(group)){
+            throw new Exception("Group does not exist");
+        }
+        boolean flag = false;
+        for(User user : groupUserMap.get(group)){
+            if(sender.getMobile().equals(user.getMobile())){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            throw new Exception("You are not allowed to send message");
+        }
+        senderMap.put(message, sender);
+        List<Message> list = groupMessageMap.get(group);
+        list.add(message);
+        groupMessageMap.put(group, list);
+        return list.size();
         }
 
     public String changeAdmin(User approver, User user, Group group) throws Exception{
