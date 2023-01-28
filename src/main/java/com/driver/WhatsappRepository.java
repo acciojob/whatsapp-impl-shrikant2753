@@ -31,50 +31,31 @@ public class WhatsappRepository {
         this.messageId = 0;
     }
     public String createUser(String name, String mobile) throws Exception {
-//        if(userMobile.contains(mobile)){
-//            throw new Exception("User already exists");
-//        }
-//        else {
-//            userMobile.add(mobile);
-//            user.put(mobile, new User(name, mobile));
-//        }
-//        return "SUCCESS";
 
         if(userMobile.contains(mobile)){
             throw new Exception("User already exists");
         }
         userMobile.add(mobile);
-        User user = new User(name, mobile);
-        userMap.put(mobile, user);
+        userMap.put(mobile, new User(name, mobile));
         return "SUCCESS";
     }
 
     public Group createGroup(List<User> users){
-//        if(users.size()<2)
-//            return null;
-//        User admin = users.get(0);
-//
-//        if(users.size()==2) {
-//            String chatName = users.get(1).getName();
-//            Group group = new Group(chatName, 2);
-//            groupUserMap.put(group, users);
-//            return null;
-//        }
-//
-//        String groupName = "Group "+ ++customGroupCount;
-//        Group group = new Group(groupName, users.size());
-//        groupUserMap.put(group, users);
-//        return group;
+        if(users.size()<2)
+            return null;
+        User admin = users.get(0);
 
-        if(users.size() > 2){
-            customGroupCount++;
-            Group group = new Group("Group " + customGroupCount, users.size());
+        if(users.size()==2) {
+            String chatName = users.get(1).getName();
+            Group group = new Group(chatName, 2);
             groupUserMap.put(group, users);
             adminMap.put(group, users.get(0));
             groupMessageMap.put(group, new ArrayList<Message>());
             return group;
         }
-        Group group = new Group(userMap.get(1).getName(), users.size());
+        customGroupCount++;
+        String groupName = "Group "+ customGroupCount;
+        Group group = new Group(groupName, users.size());
         groupUserMap.put(group, users);
         adminMap.put(group, users.get(0));
         groupMessageMap.put(group, new ArrayList<Message>());
