@@ -40,20 +40,34 @@ public class WhatsappRepository {
     }
 
     public Group createGroup(List<User> users){
-        if(users.size()<2)
-            return null;
-        User admin = users.get(0);
+//        if(users.size()<2)
+//            return null;
+//        User admin = users.get(0);
+//
+//        if(users.size()==2) {
+//            String chatName = users.get(1).getName();
+//            Group group = new Group(chatName, 2);
+//            groupUserMap.put(group, users);
+//            return null;
+//        }
+//
+//        String groupName = "Group "+ ++customGroupCount;
+//        Group group = new Group(groupName, users.size());
+//        groupUserMap.put(group, users);
+//        return group;
 
-        if(users.size()==2) {
-            String chatName = users.get(1).getName();
-            Group group = new Group(chatName, 2);
+        if(users.size() > 2){
+            customGroupCount++;
+            Group group = new Group("Group " + customGroupCount, users.size());
             groupUserMap.put(group, users);
-            return null;
+            adminMap.put(group, users.get(0));
+            groupMessageMap.put(group, new ArrayList<Message>());
+            return group;
         }
-
-        String groupName = "Group "+ ++customGroupCount;
-        Group group = new Group(groupName, users.size());
+        Group group = new Group(user.get(1).getName(), users.size());
         groupUserMap.put(group, users);
+        adminMap.put(group, users.get(0));
+        groupMessageMap.put(group, new ArrayList<Message>());
         return group;
     }
 
