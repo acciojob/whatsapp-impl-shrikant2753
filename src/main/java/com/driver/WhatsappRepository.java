@@ -40,7 +40,7 @@ public class WhatsappRepository {
 //        }
 //        return "SUCCESS";
 
-        if(!userMobile.contains(mobile)){
+        if(userMobile.contains(mobile)){
             throw new Exception("User already exists");
         }
         userMobile.add(mobile);
